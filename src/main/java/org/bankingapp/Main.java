@@ -1,18 +1,19 @@
 package org.bankingapp;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import org.kordamp.ikonli.javafx.FontIcon;
 
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        FontIcon icon = new FontIcon("fa-home");
-        icon.setIconSize(24);
+        FontAwesomeIconView icon = new FontAwesomeIconView(FontAwesomeIcon.FONT);
+        icon.setSize("24");
         // Set up the UI
         Label label = new Label("Hello, World!");
         StackPane root = new StackPane();
