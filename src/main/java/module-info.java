@@ -1,12 +1,10 @@
 module Cash.Me.Outside {
     requires javafx.controls;
     requires javafx.fxml;
-    requires org.kordamp.ikonli.javafx;
-    requires org.kordamp.ikonli.core;
-    requires org.kordamp.ikonli.fontawesome;
     requires java.sql;
     requires org.xerial.sqlitejdbc;
     requires org.slf4j;
+    requires de.jensd.fx.glyphs.fontawesome;
 
     exports org.bankingapp to javafx.graphics;
 //    exports org.bankingapp.Controllers; // Export only public APIs you want accessible
