@@ -18,7 +18,6 @@ public class Main extends Application {
         Label label = new Label("Hello, World!");
         StackPane root = new StackPane();
         root.getChildren().add(icon);
-
         // Set up the scene
         Scene scene = new Scene(root, 300, 200);
         primaryStage.setTitle("JavaFX Hello World");
