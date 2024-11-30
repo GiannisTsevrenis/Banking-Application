@@ -8,6 +8,7 @@ import org.bankingapp.Controllers.Client.ClientController;
 public class ViewFactory {
     // Client views
     private AnchorPane dashboardView;
+    private AnchorPane transactionsView;
 
     public ViewFactory() {
     }
@@ -21,6 +22,17 @@ public class ViewFactory {
             }
         }
         return dashboardView;
+    }
+
+    public AnchorPane getTransactionsView() {
+        if (transactionsView == null) {
+            try {
+                transactionsView = new FXMLLoader(getClass().getResource("/Fxml/Client/Transactions.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return transactionsView;
     }
 
     public void showLoginWindow() {
