@@ -1,6 +1,7 @@
 package org.bankingapp.Controllers.Client;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import org.bankingapp.Models.Model;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,6 +16,19 @@ public class ClientMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        addListeners();
+    }
 
+    private void addListeners() {
+        dashboard_btn.setOnAction(event -> onDashboard());
+        transaction_btn.setOnAction(event -> onTransactions());
+    }
+
+    private void onTransactions() {
+        Model.getInstance().getViewFactory().getClientSelectedMenuItem().set("Transactions");
+    }
+
+    private void onDashboard() {
+        Model.getInstance().getViewFactory().getClientSelectedMenuItem().set("Dashboard");
     }
 }
