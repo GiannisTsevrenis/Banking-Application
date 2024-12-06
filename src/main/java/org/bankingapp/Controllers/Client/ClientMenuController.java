@@ -2,6 +2,7 @@ package org.bankingapp.Controllers.Client;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import org.bankingapp.Models.Model;
+import org.bankingapp.Views.ClientMenuOptions;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -26,14 +27,14 @@ public class ClientMenuController implements Initializable {
     }
 
     private void onTransactions() {
-        Model.getInstance().getViewFactory().getClientSelectedMenuItem().set("Transactions");
+        Model.getInstance().getViewFactory().getClientSelectedMenuItem().set(ClientMenuOptions.TRANSACTIONS);
     }
 
     private void onDashboard() {
-        Model.getInstance().getViewFactory().getClientSelectedMenuItem().set("Dashboard");
+        Model.getInstance().getViewFactory().getClientSelectedMenuItem().set(ClientMenuOptions.DASHBOARD);
     }
 
     private void onAccounts() {
-        Model.getInstance().getViewFactory().getClientSelectedMenuItem().set("Accounts");
+        Model.getInstance().getViewFactory().getClientSelectedMenuItem().set(ClientMenuOptions.ACCOUNTS);
     }
 }

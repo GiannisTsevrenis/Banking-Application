@@ -1,24 +1,39 @@
 package org.bankingapp.Views;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import org.bankingapp.Controllers.Admin.AdminController;
 import org.bankingapp.Controllers.Client.ClientController;
 
 public class ViewFactory {
-    // Client views
-    private final StringProperty clientSelectedMenuItem;
+    private AccountType loginAccountType;
+    // Client
     private AnchorPane dashboardView;
     private AnchorPane transactionsView;
     private AnchorPane accountsView;
+    private final ObjectProperty<ClientMenuOptions> clientSelectedMenuItem;
+    // Admin
+    private AnchorPane createClientView;
+    private final ObjectProperty<AdminMenuOptions> adminSelectedMenuItem;
 
     public ViewFactory() {
-        this.clientSelectedMenuItem = new SimpleStringProperty("");
+        this.loginAccountType = AccountType.CLIENT;
+        this.clientSelectedMenuItem = new SimpleObjectProperty<>();
+        this.adminSelectedMenuItem = new SimpleObjectProperty<>();
     }
 
-    public StringProperty getClientSelectedMenuItem() {
+    public void setLoginAccountType(AccountType loginAccountType) {
+        this.loginAccountType = loginAccountType;
+    }
+
+    public AccountType getLoginAccountType() {
+        return loginAccountType;
+    }
+
+    public ObjectProperty<ClientMenuOptions> getClientSelectedMenuItem() {
         return clientSelectedMenuItem;
     }
 
@@ -64,6 +79,29 @@ public class ViewFactory {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Client/Client.fxml"));
         ClientController clientController = new ClientController();
         fxmlLoader.setController(clientController);
+        createStage(fxmlLoader);
+    }
+
+    // Admin
+    public ObjectProperty<AdminMenuOptions> getAdminSelectedMenuItem() {
+        return adminSelectedMenuItem;
+    }
+
+    public AnchorPane getCreateClientView() {
+        if (createClientView == null) {
+            try {
+                createClientView = new FXMLLoader(getClass().getResource("/Fxml/Admin/CreateClient.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return createClientView;
+    }
+
+    public void showAdminWindow() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Admin/Admin.fxml"));
+        AdminController adminController = new AdminController();
+        fxmlLoader.setController(adminController);
         createStage(fxmlLoader);
     }
 
