@@ -2,6 +2,7 @@ package org.bankingapp.Views;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -18,6 +19,7 @@ public class ViewFactory {
     // Admin
     private AnchorPane createClientView;
     private final ObjectProperty<AdminMenuOptions> adminSelectedMenuItem;
+    private AnchorPane ClientsView;
 
     public ViewFactory() {
         this.loginAccountType = AccountType.CLIENT;
@@ -120,5 +122,16 @@ public class ViewFactory {
 
     public void closeStage(Stage stage) {
         stage.close();
+    }
+
+    public AnchorPane getClientsView() {
+        if (ClientsView == null) {
+            try {
+                ClientsView = new FXMLLoader(getClass().getResource("/Fxml/Admin/Clients.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return ClientsView;
     }
 }
