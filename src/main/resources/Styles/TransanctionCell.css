@@ -1,0 +1,35 @@
+.cellContainer {
+  -fx-background-color: #fff;
+  -fx-background-radius: 10;
+  -fx-effect: dropshadow(three-pass-box, #ddd, 5, 0, 0, 5);
+}
+.transactionIconContainer {
+  -fx-background-color: #fff;
+  -fx-alignment: center;
+  -fx-spacing: 5;
+}
+
+.transactionDateLabel {
+  -fx-text-fill: #aaa;
+  -fx-font-weight: 700;
+}
+
+.transactionPayeeAddressLabel {
+  -fx-text-fill: #000;
+  -fx-font-weight: 700;
+}
+
+.cellContainer Line {
+  -fx-stroke: #eee;
+}
+.transactionAmountLabel {
+  -fx-background-color: #132a13;
+  -fx-background-radius: 2;
+  -fx-text-fill: #fff;
+  -fx-padding: 5;
+  -fx-font-weight: 700;
+}
+
+.transactionAmountLabel FontAwesomeIconView {
+  -fx-fill: #fff;
+}

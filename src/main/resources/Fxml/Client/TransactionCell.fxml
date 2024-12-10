@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+
+<AnchorPane prefHeight="60.0" prefWidth="550.0" styleClass="cellContainer" stylesheets="@../../Styles/TransanctionCell.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.bankingapp.Controllers.Client.TransactionCellController">
+   <VBox layoutX="10.0" layoutY="4.0" prefHeight="50.0" prefWidth="50.0" styleClass="transactionIconContainer" AnchorPane.bottomAnchor="4.9" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="4.9">
+      <FontAwesomeIconView fx:id="arrowLeft" glyphName="LONG_ARROW_LEFT" size="20" />
+      <FontAwesomeIconView fx:id="arrowRight" glyphName="LONG_ARROW_RIGHT" size="20" />
+   </VBox>
+   <Label fx:id="transactionDateLabel" styleClass="transactionDateLabel" text="10-12-2025" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="22.0" />
+   <Label fx:id="transactionPayeeLabel" layoutX="188.0" layoutY="22.0" styleClass="transactionPayeeAddressLabel" text="Spongebob" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="22.0" />
+   <Line endY="20.0" layoutX="318.0" layoutY="21.0" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="20.5" />
+   <Label fx:id="transactionReceiverLabel" layoutX="347.0" layoutY="21.0" styleClass="transactionPayeeAddressLabel" text="Patrick" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="22.0" />
+   <Label fx:id="transactionAmountLabel" layoutX="475.0" layoutY="17.0" styleClass="transactionAmountLabel" text="2000" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="17.0">
+      <graphic>
+         <FontAwesomeIconView glyphName="DOLLAR" />
+      </graphic>
+   </Label>
+</AnchorPane>
