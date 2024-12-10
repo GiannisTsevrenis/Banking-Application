@@ -1,0 +1,35 @@
+.clientCellContainer {
+  -fx-background-color: #fff;
+  -fx-background-radius: 10;
+  -fx-effect: dropshadow(three-pass-box, #ddd, 5, 0, 0, 7);
+}
+
+.clientCellContainer FontAwesomeIconView {
+  -fx-fill: #132a13;
+}
+.clientCellContainer HBox {
+  -fx-spacing: 15;
+  -fx-alignment: Center_left;
+}
+.clientCellContainer HBox Label {
+  -fx-text-fill: #444;
+  -fx-font-family: "Calibri Light";
+  -fx-font-size: 1.5em;
+}
+.accountDisplayLabel {
+  -fx-font-family: Calibri;
+  -fx-font-weight: bold;
+  -fx-font-size: 1.2em;
+}
+
+.deleteButton {
+  -fx-text-fill: #fff;
+  -fx-background-color: #db4040;
+}
+
+.deleteButton FontAwesomeIconView {
+  -fx-fill: #fff;
+}
+.deleteButton:hover {
+  -fx-cursor: hand;
+}

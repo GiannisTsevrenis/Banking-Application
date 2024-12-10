@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane prefHeight="50.0" prefWidth="750.0" styleClass="clientCellContainer" stylesheets="@../../Styles/ClientCell.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.bankingapp.Controllers.Admin.ClientCellController">
+    <FontAwesomeIconView glyphName="USER" layoutX="23.0" layoutY="29.0" size="20" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
+    <HBox layoutX="79.0" layoutY="-26.0" prefHeight="40.0" prefWidth="550.0" AnchorPane.leftAnchor="60.0"
+          AnchorPane.topAnchor="5.0">
+        <Label fx:id="firstNameLabel" text="Spongebob"/>
+        <Label fx:id="lastNameLabel" text="Squarepants"/>
+        <Label fx:id="payeeAddressLabel" text="\@Ssquare"/>
+        <Label fx:id="checkingAccountLabel" styleClass="accountDisplayLabel" text="12312312"/>
+        <Label fx:id="savingsAccountLabel" styleClass="accountDisplayLabel" text="12312312"/>
+        <Label fx:id="dateLabel" text="2024-12-10"/>
+    </HBox>
+    <Button fx:id="deleteButton" layoutX="684.0" layoutY="13.0" mnemonicParsing="false" styleClass="deleteButton" text="Delete" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="12.0">
+        <graphic>
+          <FontAwesomeIconView glyphName="WINDOW_CLOSE_ALT" size="15" />
+        </graphic>
+    </Button>
+</AnchorPane>
