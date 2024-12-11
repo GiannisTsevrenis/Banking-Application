@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane prefHeight="60.0" prefWidth="550.0" styleClass="cellContainer" stylesheets="@../../Styles/TransanctionCell.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.bankingapp.Controllers.Client.TransactionCellController">
+<AnchorPane prefHeight="60.0" prefWidth="550.0" styleClass="cellContainer" stylesheets="@../../Styles/TransanctionCell.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" >
    <VBox layoutX="10.0" layoutY="4.0" prefHeight="50.0" prefWidth="50.0" styleClass="transactionIconContainer" AnchorPane.bottomAnchor="4.9" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="4.9">
       <FontAwesomeIconView fx:id="arrowLeft" glyphName="LONG_ARROW_LEFT" size="20" />
       <FontAwesomeIconView fx:id="arrowRight" glyphName="LONG_ARROW_RIGHT" size="20" />

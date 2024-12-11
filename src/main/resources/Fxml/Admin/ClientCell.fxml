@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane prefHeight="50.0" prefWidth="750.0" styleClass="clientCellContainer" stylesheets="@../../Styles/ClientCell.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.bankingapp.Controllers.Admin.ClientCellController">
+<AnchorPane prefHeight="50.0" prefWidth="750.0" styleClass="clientCellContainer" stylesheets="@../../Styles/ClientCell.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" >
     <FontAwesomeIconView glyphName="USER" layoutX="23.0" layoutY="29.0" size="20" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
     <HBox layoutX="79.0" layoutY="-26.0" prefHeight="40.0" prefWidth="550.0" AnchorPane.leftAnchor="60.0"
           AnchorPane.topAnchor="5.0">
