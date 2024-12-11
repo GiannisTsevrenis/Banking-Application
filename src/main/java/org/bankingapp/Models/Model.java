@@ -4,17 +4,18 @@ import org.bankingapp.Views.AccountType;
 import org.bankingapp.Views.ViewFactory;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class Model {
     private final ViewFactory viewFactory;
     private final DatabaseDriver databaseDriver;
-    private AccountType loginAccountType = AccountType.CLIENT;
     //client data section
-    private Client client;
+    private final Client client;
     private boolean clientLoginSuccessFlag;
-
     //admin data section
+    private boolean adminLoginSuccessFlag;
+
     private static final class ModelHolder {
         private static final Model model = new Model();
     }
@@ -26,6 +27,7 @@ public class Model {
         this.clientLoginSuccessFlag = false;
         this.client = new Client("", "", "", null, null, null);
         //Admin
+        this.adminLoginSuccessFlag = false;
     }
 
     public static synchronized Model getInstance() {
@@ -40,13 +42,6 @@ public class Model {
         return this.databaseDriver;
     }
 
-    public AccountType getLoginAccountType() {
-        return loginAccountType;
-    }
-
-    public void setLoginAccountType(AccountType loginAccountType) {
-        this.loginAccountType = loginAccountType;
-    }
     //client
 
     public Client getClient() {
@@ -73,10 +68,30 @@ public class Model {
                 String[] dateParts = resultSet.getString("Date").split("-");
                 LocalDate localDate = LocalDate.of(Integer.parseInt(dateParts[0]), Integer.parseInt(dateParts[1]), Integer.parseInt(dateParts[2]));
                 this.client.getDateCreated().set(localDate);
-                this.clientLoginSuccessFlag = true;
+                setClientLoginSuccessFlag(true);
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    //admin
+    public boolean getAdminLoginSuccessFlag() {
+        return this.adminLoginSuccessFlag;
+    }
+
+    public void setAdminLoginSuccessFlag(boolean flag) {
+        this.adminLoginSuccessFlag = flag;
+    }
+
+    public void evaluateAdminCredentials(String username, String password) {
+        ResultSet resultSet = databaseDriver.getAdminData(username, password);
+        try {
+            if (resultSet.isBeforeFirst()) {
+                setAdminLoginSuccessFlag(true);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

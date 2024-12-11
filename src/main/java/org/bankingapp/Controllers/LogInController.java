@@ -21,7 +21,7 @@ public class LogInController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         acc_selector.setItems(FXCollections.observableArrayList(AccountType.values()));
         acc_selector.setValue(Model.getInstance().getViewFactory().getLoginAccountType());
-        acc_selector.valueProperty().addListener(observable -> Model.getInstance().getViewFactory().setLoginAccountType(acc_selector.getValue()));
+        acc_selector.valueProperty().addListener(observable -> setAcc_selector());
         login_btn.setOnAction(event -> onLogin());
     }
 
@@ -36,10 +36,30 @@ public class LogInController implements Initializable {
             } else {
                 payee_address_fld.setText("");
                 password_fld.setText("");
-                error_lbl.setText("Incorrect credentials");
+                error_lbl.setText("Incorrect client credentials");
+                payee_address_fld.requestFocus();
             }
         } else {
-            Model.getInstance().getViewFactory().showAdminWindow();
+            //evaluate credentials
+            Model.getInstance().evaluateAdminCredentials(payee_address_fld.getText(),password_fld.getText());
+            if (Model.getInstance().getAdminLoginSuccessFlag()){
+                Model.getInstance().getViewFactory().showAdminWindow();
+                Model.getInstance().getViewFactory().closeStage(stage);
+            }else{
+                payee_address_fld.setText("");
+                password_fld.setText("");
+                error_lbl.setText("Incorrect admin credentials");
+                payee_address_fld.requestFocus();
+            }
+        }
+    }
+    private void setAcc_selector(){
+        Model.getInstance().getViewFactory().setLoginAccountType(acc_selector.getValue());
+        if (acc_selector.getValue()==AccountType.ADMIN){
+            payee_address_lbl.setText("Username:");
+
+        }else {
+            payee_address_lbl.setText("Payee Address:");
         }
     }
 }

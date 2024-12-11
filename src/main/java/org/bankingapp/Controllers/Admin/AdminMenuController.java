@@ -1,6 +1,7 @@
 package org.bankingapp.Controllers.Admin;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
 import org.bankingapp.Models.Model;
 import org.bankingapp.Views.AdminMenuOptions;
 
@@ -22,6 +23,7 @@ public class AdminMenuController implements Initializable {
         create_client_btn.setOnAction(event -> onCreateClient());
         clients_list_btn.setOnAction(event -> onClients());
         deposit_btn.setOnAction(event -> onDeposit());
+        logout_btn.setOnAction(event -> onLogout());
     }
 
     private void onCreateClient() {
@@ -34,5 +36,13 @@ public class AdminMenuController implements Initializable {
 
     private void onDeposit() {
         Model.getInstance().getViewFactory().getAdminSelectedMenuItem().set(AdminMenuOptions.DEPOSIT);
+    }
+
+    private void onLogout() {
+        Stage stage = (Stage) create_client_btn.getScene().getWindow();
+        Model.getInstance().getViewFactory().closeStage(stage);
+        //on log out show log in window
+        Model.getInstance().getViewFactory().showLoginWindow();
+        Model.getInstance().setAdminLoginSuccessFlag(false);
     }
 }
