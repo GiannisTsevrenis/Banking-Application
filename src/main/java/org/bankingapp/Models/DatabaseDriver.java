@@ -4,11 +4,11 @@ import java.sql.*;
 public class DatabaseDriver {
     private Connection connection;
 
-    private DatabaseDriver() {
+    public DatabaseDriver() {
         try {
             this.connection = DriverManager.getConnection("jdbc:sqlite:DATABASENAME.db");
         } catch (SQLException e) {
-            e.getErrorCode();
+            e.printStackTrace();
         }
     }
 

@@ -15,11 +15,11 @@ public class Client {
     private final ObjectProperty<LocalDate> dateCreated;
 
     public Client(String firstName, String lastName, String payeeAddress, Account checkingAccount, Account savingsAccount, LocalDate dateCreated) {
-        this.firstName = new SimpleStringProperty(this, "First Name", firstName);
-        this.lastName = new SimpleStringProperty(this, "Last Name", lastName);
-        this.payeeAddress = new SimpleStringProperty(this, "Payee Address", payeeAddress);
-        this.checkingAccount = new SimpleObjectProperty<>(this, "Checking Account", checkingAccount);
-        this.savingsAccount = new SimpleObjectProperty<>(this, "Savings Account", savingsAccount);
+        this.firstName = new SimpleStringProperty(this, "FirstName", firstName);
+        this.lastName = new SimpleStringProperty(this, "LastName", lastName);
+        this.payeeAddress = new SimpleStringProperty(this, "PayeeAddress", payeeAddress);
+        this.checkingAccount = new SimpleObjectProperty<>(this, "CheckingAccount", checkingAccount);
+        this.savingsAccount = new SimpleObjectProperty<>(this, "SavingsAccount", savingsAccount);
         this.dateCreated = new SimpleObjectProperty<>(this, "Date", dateCreated);
     }
 
