@@ -12,7 +12,7 @@ public class ClientCellFactory extends ListCell<Client> {
             setText(null);
             setGraphic(null);
         } else {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Client/TransactionCell.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Admin/ClientCell.fxml"));
             ClientCellController controller = new ClientCellController(client);
             fxmlLoader.setController(controller);
             setText(null);

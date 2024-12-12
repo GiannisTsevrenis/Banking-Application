@@ -1,4 +1,7 @@
 package org.bankingapp.Models;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
 import org.bankingapp.Views.AccountType;
 import org.bankingapp.Views.ViewFactory;
@@ -15,6 +18,7 @@ public class Model {
     private boolean clientLoginSuccessFlag;
     //admin data section
     private boolean adminLoginSuccessFlag;
+    private final ObservableList<Client> clients;
 
     private static final class ModelHolder {
         private static final Model model = new Model();
@@ -28,6 +32,7 @@ public class Model {
         this.client = new Client("", "", "", null, null, null);
         //Admin
         this.adminLoginSuccessFlag = false;
+        this.clients = FXCollections.observableArrayList();
     }
 
     public static synchronized Model getInstance() {
@@ -41,7 +46,6 @@ public class Model {
     public DatabaseDriver getDatabaseDriver() {
         return this.databaseDriver;
     }
-
     //client
 
     public Client getClient() {
@@ -68,6 +72,10 @@ public class Model {
                 String[] dateParts = resultSet.getString("Date").split("-");
                 LocalDate localDate = LocalDate.of(Integer.parseInt(dateParts[0]), Integer.parseInt(dateParts[1]), Integer.parseInt(dateParts[2]));
                 this.client.getDateCreated().set(localDate);
+                checkingAccount = getCheckingAccount(payeeAddress);
+                savingsAccount = getSavingsAccount(payeeAddress);
+                this.client.getCheckingAccount().set(checkingAccount);
+                this.client.getSavingsAccount().set(savingsAccount);
                 setClientLoginSuccessFlag(true);
             }
         } catch (Exception e) {
@@ -93,5 +101,58 @@ public class Model {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public ObservableList<Client> getClients() {
+        return clients;
+    }
+
+    public void setClients() {
+        CheckingAccount checkingAccount;
+        SavingsAccount savingsAccount;
+        ResultSet resultSet = databaseDriver.getAllClientsData();
+        try {
+            while (resultSet.next()) {
+                String firstName = resultSet.getString("FirstName");
+                String lastName = resultSet.getString("LastName");
+                String payeeAddress = resultSet.getString("PayeeAddress");
+                String[] dateParts = resultSet.getString("Date").split("-");
+                LocalDate date = LocalDate.of(Integer.parseInt(dateParts[0]), Integer.parseInt(dateParts[1]), Integer.parseInt(dateParts[2]));
+                checkingAccount = getCheckingAccount(payeeAddress);
+                savingsAccount = getSavingsAccount(payeeAddress);
+                clients.add(new Client(firstName, lastName, payeeAddress, checkingAccount, savingsAccount, date));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // common
+    public CheckingAccount getCheckingAccount(String payeeAddress) {
+        CheckingAccount checkingAccount = null;
+        ResultSet resultSet = databaseDriver.getCheckingAccountData(payeeAddress);
+        try {
+            String accNumber = resultSet.getString("AccountNumber");
+            double balance = resultSet.getDouble("Balance");
+            int transactionLimit = (int) resultSet.getDouble("TransactionLimit");
+            checkingAccount = new CheckingAccount(payeeAddress, accNumber, balance, transactionLimit);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return checkingAccount;
+    }
+
+    public SavingsAccount getSavingsAccount(String payeeAddress) {
+        SavingsAccount savingsAccount = null;
+        ResultSet resultSet = databaseDriver.getSavingsAccountData(payeeAddress);
+        try {
+            String accNumber = resultSet.getString("AccountNumber");
+            double balance = resultSet.getDouble("Balance");
+            int withdrawalLimit = (int) resultSet.getDouble("WithdrawalLimit");
+            savingsAccount = new SavingsAccount(payeeAddress, accNumber, balance, withdrawalLimit);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return savingsAccount;
     }
 }

@@ -15,4 +15,9 @@ public class SavingsAccount extends Account {
     public DoubleProperty getWithdrawLimit() {
         return withdrawLimit;
     }
+
+    @Override
+    public String toString() {
+        return getAccountNumber().get();
+    }
 }

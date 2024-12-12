@@ -77,6 +77,7 @@ public class DatabaseDriver {
             throw new RuntimeException(e);
         }
     }
+
     public void createSavingsAccount(String owner, String number, double withdrawalLimit, double balance) {
         PreparedStatement preparedStatement;
         String query = "INSERT INTO SavingsAccounts (Owner, AccountNumber, WithdrawalLimit, Balance) VALUES (?, ?, ?, ?)";
@@ -92,8 +93,21 @@ public class DatabaseDriver {
         }
     }
 
+    public ResultSet getAllClientsData() {
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        String query = "SELECT * FROM Clients";
+        try {
+            preparedStatement = this.connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return resultSet;
+    }
+
     //common methods
-    public int getLastId(){
+    public int getLastId() {
         PreparedStatement preparedStatement;
         ResultSet resultSet;
         String query = "SELECT * FROM sqlite_sequence WHERE name = 'Clients'";
@@ -107,5 +121,33 @@ public class DatabaseDriver {
             throw new RuntimeException(e);
         }
         return id;
+    }
+
+    public ResultSet getCheckingAccountData(String payeeAddress) {
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        String query = "SELECT * FROM CheckingAccounts WHERE Owner = ?";
+        try {
+            preparedStatement = this.connection.prepareStatement(query);
+            preparedStatement.setString(1, payeeAddress);
+            resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return resultSet;
+    }
+
+    public ResultSet getSavingsAccountData(String payeeAddress) {
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        String query = "SELECT * FROM SavingsAccounts WHERE Owner = ?";
+        try {
+            preparedStatement = this.connection.prepareStatement(query);
+            preparedStatement.setString(1, payeeAddress);
+            resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return resultSet;
     }
 }
