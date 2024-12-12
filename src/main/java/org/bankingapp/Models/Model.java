@@ -6,6 +6,8 @@ import javafx.scene.chart.PieChart;
 import org.bankingapp.Views.AccountType;
 import org.bankingapp.Views.ViewFactory;
 
+import java.lang.ref.Cleaner;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -125,6 +127,24 @@ public class Model {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public ObservableList<Client> searchClient(String payeeAddress) {
+        ObservableList<Client> searchResults = FXCollections.observableArrayList();
+        ResultSet resultSet;
+        try {
+            resultSet = databaseDriver.searchClient(payeeAddress);
+            CheckingAccount checkingAccount = getCheckingAccount(payeeAddress);
+            SavingsAccount savingsAccount = getSavingsAccount(payeeAddress);
+            String firstName = resultSet.getString("FirstName");
+            String lastName = resultSet.getString("LastName");
+            String[] dateParts = resultSet.getString("Date").split("-");
+            LocalDate date = LocalDate.of(Integer.parseInt(dateParts[0]), Integer.parseInt(dateParts[1]), Integer.parseInt(dateParts[2]));
+            searchResults.add(new Client(firstName, lastName, payeeAddress, checkingAccount, savingsAccount, date));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return searchResults;
     }
 
     // common

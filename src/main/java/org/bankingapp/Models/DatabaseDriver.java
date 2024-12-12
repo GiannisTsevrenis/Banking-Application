@@ -106,6 +106,33 @@ public class DatabaseDriver {
         return resultSet;
     }
 
+    public ResultSet searchClient(String payeeAddress) {
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        String query = "SELECT * FROM Clients WHERE PayeeAddress = ?";
+        try {
+            preparedStatement = this.connection.prepareStatement(query);
+            preparedStatement.setString(1, payeeAddress);
+            resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return resultSet;
+    }
+
+    public void depositSavings(String payeeAddress, double amount) {
+        PreparedStatement preparedStatement;
+        String query = "UPDATE SavingsAccounts SET Balance = ? WHERE Owner = ?";
+        try {
+            preparedStatement = this.connection.prepareStatement(query);
+            preparedStatement.setString(1, String.valueOf(amount));
+            preparedStatement.setString(2, payeeAddress);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     //common methods
     public int getLastId() {
         PreparedStatement preparedStatement;
