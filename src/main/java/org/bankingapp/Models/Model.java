@@ -114,8 +114,8 @@ public class Model {
         return latestTransactions;
     }
 
-    public void setAllTransactions() {
-        prepareTransactions(this.allTransactions, 1);
+    public void setAllTransactions() { //TODO: implement pagination
+        prepareTransactions(this.allTransactions, -1);
     }
 
     public ObservableList<Transaction> getAllTransactions() {

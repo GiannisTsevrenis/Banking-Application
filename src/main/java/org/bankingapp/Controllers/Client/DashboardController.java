@@ -78,9 +78,7 @@ public class DashboardController implements Initializable {
         double income = 0;
         double expenses = 0;
         if (Model.getInstance().getAllTransactions().isEmpty()) {
-            System.out.println("Hello");
             Model.getInstance().setAllTransactions();
-            System.out.println("hi");
 
         }
         for (Transaction transaction : Model.getInstance().getAllTransactions()) {

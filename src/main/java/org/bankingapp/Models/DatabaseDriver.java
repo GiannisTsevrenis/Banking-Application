@@ -99,8 +99,8 @@ public class DatabaseDriver {
             preparedStatement.setString(1, sender);
             preparedStatement.setString(2, receiver);
             preparedStatement.setString(3, String.valueOf(amount));
-            preparedStatement.setString(5, String.valueOf(LocalDate.now()));
-            preparedStatement.setString(4, message);
+            preparedStatement.setString(4, String.valueOf(LocalDate.now()));
+            preparedStatement.setString(5, message);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
