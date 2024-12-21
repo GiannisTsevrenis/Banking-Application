@@ -18,6 +18,8 @@ public class Model {
     //client data section
     private final Client client;
     private boolean clientLoginSuccessFlag;
+    private final ObservableList<Transaction> latestTransactions;
+    private final ObservableList<Transaction> allTransactions;
     //admin data section
     private boolean adminLoginSuccessFlag;
     private final ObservableList<Client> clients;
@@ -32,6 +34,8 @@ public class Model {
         //Client
         this.clientLoginSuccessFlag = false;
         this.client = new Client("", "", "", null, null, null);
+        this.latestTransactions = FXCollections.observableArrayList();
+        this.allTransactions = FXCollections.observableArrayList();
         //Admin
         this.adminLoginSuccessFlag = false;
         this.clients = FXCollections.observableArrayList();
@@ -83,6 +87,39 @@ public class Model {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void prepareTransactions(ObservableList<Transaction> transactions, int limit) {
+        ResultSet resultSet = databaseDriver.getTransactions(this.client.getPayeeAddress().get(), limit);
+        try {
+            while (resultSet.next()) {
+                String sender = resultSet.getString("Sender");
+                String receiver = resultSet.getString("Receiver");
+                double amount = resultSet.getDouble("Amount");
+                String[] dateParts = resultSet.getString("Date").split("-");
+                LocalDate date = LocalDate.of(Integer.parseInt(dateParts[0]), Integer.parseInt(dateParts[1]), Integer.parseInt(dateParts[2]));
+                String message = resultSet.getString("Message");
+                transactions.add(new Transaction(sender, receiver, amount, date, message));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setLatestTransactions() {
+        prepareTransactions(this.latestTransactions, 4);
+    }
+
+    public ObservableList<Transaction> getLatestTransactions() {
+        return latestTransactions;
+    }
+
+    public void setAllTransactions() {
+        prepareTransactions(this.allTransactions, -1);
+    }
+
+    public ObservableList<Transaction> getAllTransactions() {
+        return allTransactions;
     }
 
     //admin

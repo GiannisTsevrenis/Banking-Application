@@ -19,11 +19,92 @@ public class DatabaseDriver {
         ResultSet resultSet = null;
         try {
             statement = this.connection.createStatement();
+            //TODO prone to sql injection fix later
             resultSet = statement.executeQuery("SELECT * FROM Clients WHERE PayeeAddress='" + payeeAddress + "' AND Password='" + password + "';");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return resultSet;
+    }
+
+    public ResultSet getTransactions(String payeeAddress, int limit) {
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        String query = "SELECT * FROM Transactions WHERE Sender = ? OR Receiver = ? LIMIT ?";
+        try {
+            preparedStatement = this.connection.prepareStatement(query);
+            preparedStatement.setString(1, payeeAddress);
+            preparedStatement.setString(2, payeeAddress);
+            preparedStatement.setString(3, String.valueOf(limit));
+            resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return resultSet;
+    }
+
+    public double getSavingsAccountBalance(String payeeAddress) {
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        double balance = 0;
+        String query = "SELECT * FROM SavingsAccounts WHERE Owner = ?";
+        try {
+            preparedStatement = this.connection.prepareStatement(query);
+            preparedStatement.setString(1, payeeAddress);
+            resultSet = preparedStatement.executeQuery();
+            balance = resultSet.getDouble("Balance");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return balance;
+    }
+
+    public void updateBalance(String payeeAddress, double amount, String operation) {
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        String query = "SELECT * FROM SavingsAccounts WHERE Owner = ?";
+        String updateQuery = "UPDATE SavingsAccounts SET Balance = ? WHERE Owner = ?";
+        try {
+            // Retrieve the current balance
+            preparedStatement = this.connection.prepareStatement(query);
+            preparedStatement.setString(1, payeeAddress);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                double balance = resultSet.getDouble("Balance");
+                double newBalance;
+                if (operation.equals("ADD")) {
+                    newBalance = balance + amount;
+                } else {
+                    if (balance >= amount) {
+                        newBalance = balance - amount;
+                    } else {
+                        return;
+                    }
+                }
+                preparedStatement = this.connection.prepareStatement(updateQuery);
+                preparedStatement.setDouble(1, newBalance);
+                preparedStatement.setString(2, payeeAddress);
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void newTransaction(String sender, String receiver, double amount, String message) {
+        PreparedStatement preparedStatement;
+        String query = "INSERT INTO Transactions (Sender, Receiver, Amount, Date, Message) VALUES (?, ?, ?, ?, ?)";
+        try {
+            preparedStatement = this.connection.prepareStatement(query);
+            preparedStatement.setString(1, sender);
+            preparedStatement.setString(2, receiver);
+            preparedStatement.setString(3, String.valueOf(amount));
+            preparedStatement.setString(5, String.valueOf(LocalDate.now()));
+            preparedStatement.setString(4, message);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     //admin
@@ -106,20 +187,6 @@ public class DatabaseDriver {
         return resultSet;
     }
 
-    public ResultSet searchClient(String payeeAddress) {
-        PreparedStatement preparedStatement;
-        ResultSet resultSet;
-        String query = "SELECT * FROM Clients WHERE PayeeAddress = ?";
-        try {
-            preparedStatement = this.connection.prepareStatement(query);
-            preparedStatement.setString(1, payeeAddress);
-            resultSet = preparedStatement.executeQuery();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return resultSet;
-    }
-
     public void depositSavings(String payeeAddress, double amount) {
         PreparedStatement preparedStatement;
         String query = "UPDATE SavingsAccounts SET Balance = ? WHERE Owner = ?";
@@ -134,6 +201,20 @@ public class DatabaseDriver {
     }
 
     //common methods
+    public ResultSet searchClient(String payeeAddress) {
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        String query = "SELECT * FROM Clients WHERE PayeeAddress = ?";
+        try {
+            preparedStatement = this.connection.prepareStatement(query);
+            preparedStatement.setString(1, payeeAddress);
+            resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return resultSet;
+    }
+
     public int getLastId() {
         PreparedStatement preparedStatement;
         ResultSet resultSet;
