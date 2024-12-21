@@ -115,7 +115,7 @@ public class Model {
     }
 
     public void setAllTransactions() {
-        prepareTransactions(this.allTransactions, -1);
+        prepareTransactions(this.allTransactions, 1);
     }
 
     public ObservableList<Transaction> getAllTransactions() {

@@ -35,6 +35,7 @@ public class DashboardController implements Initializable {
         transaction_listview.setItems(Model.getInstance().getLatestTransactions());
         transaction_listview.setCellFactory(e -> new TransactionCellFactory());
         send_money_btn.setOnAction(event -> onSendMoney());
+        accountSummary();
     }
 
     private void bindData() {
@@ -71,5 +72,25 @@ public class DashboardController implements Initializable {
         payee_fld.setText("");
         amount_fld.setText("");
         message_fld.setText("");
+    }
+
+    public void accountSummary() {
+        double income = 0;
+        double expenses = 0;
+        if (Model.getInstance().getAllTransactions().isEmpty()) {
+            System.out.println("Hello");
+            Model.getInstance().setAllTransactions();
+            System.out.println("hi");
+
+        }
+        for (Transaction transaction : Model.getInstance().getAllTransactions()) {
+            if (transaction.getSender().get().equals(Model.getInstance().getClient().getPayeeAddress().get())) {
+                expenses += transaction.amountProperty().get();
+            } else {
+                income += transaction.amountProperty().get();
+            }
+        }
+        income_lbl.setText("+ $ " + income);
+        expense_lbl.setText("- $ " + expenses);
     }
 }
