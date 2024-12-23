@@ -2,9 +2,14 @@ package org.bankingapp.Views;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.bankingapp.Controllers.Admin.AdminController;
 import org.bankingapp.Controllers.Client.ClientController;
@@ -108,6 +113,24 @@ public class ViewFactory {
         AdminController adminController = new AdminController();
         fxmlLoader.setController(adminController);
         createStage(fxmlLoader);
+    }
+
+    public void showMessageWindow(String payeeAddress, String message) {
+        StackPane pane = new StackPane();
+        HBox hbox = new HBox(5);
+        hbox.setAlignment(Pos.CENTER);
+        Label senderLabel = new Label(payeeAddress);
+        Label messageLabel = new Label(message);
+        hbox.getChildren().addAll(senderLabel, messageLabel);
+        pane.getChildren().add(hbox);
+        Scene scene = new Scene(pane, 300, 300);
+        Stage stage = new Stage();
+        stage.getIcons().add(new Image(String.valueOf(getClass().getResource("/Images/bank.png"))));
+        stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Message");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void createStage(FXMLLoader fxmlLoader) {

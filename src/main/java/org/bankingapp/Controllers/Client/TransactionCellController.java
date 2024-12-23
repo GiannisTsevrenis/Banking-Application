@@ -1,6 +1,7 @@
 package org.bankingapp.Controllers.Client;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import org.bankingapp.Models.Model;
@@ -16,6 +17,7 @@ public class TransactionCellController implements Initializable {
     public Label transactionAmountLabel;
     public FontAwesomeIconView arrowLeft;
     public FontAwesomeIconView arrowRight;
+    public Button messageButton;
     private final Transaction transaction;
 
     public TransactionCellController(Transaction transaction) {
@@ -28,6 +30,7 @@ public class TransactionCellController implements Initializable {
         transactionReceiverLabel.textProperty().bind(transaction.getReceiver());
         transactionAmountLabel.textProperty().bind(transaction.amountProperty().asString());
         transactionDateLabel.textProperty().bind(transaction.getDate().asString());
+        messageButton.setOnAction(event -> Model.getInstance().getViewFactory().showMessageWindow(transaction.getSender().get(), transaction.getMessage().get()));
         transactionIcons();
     }
 

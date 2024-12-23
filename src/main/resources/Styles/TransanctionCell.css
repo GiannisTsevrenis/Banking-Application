@@ -22,6 +22,15 @@
 .cellContainer Line {
   -fx-stroke: #eee;
 }
+.messageButton {
+  -fx-background-color: #fff;
+}
+.messageButton FontAwesomeIconView {
+  -fx-fill: #132a13;
+}
+.messageButton:hover {
+  -fx-cursor: hand;
+}
 .transactionAmountLabel {
   -fx-background-color: #132a13;
   -fx-background-radius: 2;
