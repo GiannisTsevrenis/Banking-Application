@@ -1,9 +1,7 @@
 # JavaFX Banking Application
 
 ## **Project Overview**
-This is a full-stack **banking application** on desktop, written in **Java** and built using **JavaFX** for UI development and **SQLite** for data persistence.  
-The application enables users to interact with various banking functionalities, such as viewing accounts, transferring funds, and managing clients.
-The implementation follows the **MVC (Model-View-Controller)** design pattern to ensure clean and maintainable code.
+This is a full-stack **banking application** on desktop, written in **Java** and built using **JavaFX** for UI development and **SQLite** for data persistence. The application enables users to interact with various banking functionalities, such as viewing accounts, transferring funds, and managing clients. The implementation follows the **MVC (Model-View-Controller)** design pattern to ensure clean and maintainable code.
 
 ---
 
